@@ -528,21 +528,29 @@ void FwDl_ThreadFunc()
 #if defined (FEATURE_RDKB_LED_MANAGER)
     /* Either image download or flashing failed. set previous state */
 #if defined (FEATURE_RDKB_LED_MANAGER_CAPTIVE_PORTAL)
-            if (!led_disable) {
-            printf("Led Flashing Not Disabled \n");
-            if (!syscfg_get(NULL, "redirection_flag", redirFlag, sizeof(redirFlag)) &&
-               !syscfg_get(NULL, "CaptivePortal_Enable", captivePortalEnable, sizeof(captivePortalEnable))) {
-              if (!strncmp(redirFlag, "true", 4) && !strncmp(captivePortalEnable, "true", 4)) {
-                  if (sysevent_fd != -1) {
+    if (!led_disable)
+    {
+        CcspTraceInfo(("Led Flashing Not Disabled \n"));
+        if (!syscfg_get(NULL, "redirection_flag", redirFlag, sizeof(redirFlag)) &&
+               !syscfg_get(NULL, "CaptivePortal_Enable", captivePortalEnable, sizeof(captivePortalEnable)))
+        {
+              if (!strncmp(redirFlag, "true", 4) && !strncmp(captivePortalEnable, "true", 4))
+              {
+                  if (sysevent_fd != -1)
+                  {
                       sysevent_set(sysevent_fd, sysevent_token, SYSEVENT_LED_STATE, FW_DOWNLOAD_STOP_CAPTIVEMODE, 0);
+                      CcspTraceInfo(("Setting led to Blinking white as Firmware Download failed \n"));
                   }
-              } else {
-                  if (sysevent_fd != -1) {
+              } else
+              {
+                  if (sysevent_fd != -1)
+                  {
                       sysevent_set(sysevent_fd, sysevent_token, SYSEVENT_LED_STATE, FW_DOWNLOAD_STOP_EVENT, 0);
+                      CcspTraceInfo(("Setting led to Solid white as Firmware Download failed \n"));
                   }
               }
-            }
-            } 
+        }
+    } 
 #else
     if(sysevent_fd != -1)
     {
@@ -713,6 +721,33 @@ void FwDlAndFR_ThreadFunc()
     {
         CcspTraceError((" Failed to start download \n"));
         /* Drop the privilege */
+
+#if defined (FEATURE_RDKB_LED_MANAGER_CAPTIVE_PORTAL)
+    CcspTraceInfo(("Before Exiting as hal returned failure\n"));
+    if (!led_disable)
+    {
+        CcspTraceInfo(("Led Flashing Not Disabled \n"));
+        if (!syscfg_get(NULL, "redirection_flag", redirFlag, sizeof(redirFlag)) &&
+               !syscfg_get(NULL, "CaptivePortal_Enable", captivePortalEnable, sizeof(captivePortalEnable)))
+        {
+              if (!strncmp(redirFlag, "true", 4) && !strncmp(captivePortalEnable, "true", 4))
+              {
+                  if (sysevent_fd != -1)
+                  {
+                      sysevent_set(sysevent_fd, sysevent_token, SYSEVENT_LED_STATE, FW_DOWNLOAD_STOP_CAPTIVEMODE, 0);
+                      CcspTraceInfo(("Setting led to Blinking white as Firmware Download failed \n"));
+                  }
+              } else
+              {
+                  if (sysevent_fd != -1)
+                  {
+                      sysevent_set(sysevent_fd, sysevent_token, SYSEVENT_LED_STATE, FW_DOWNLOAD_STOP_EVENT, 0);
+                      CcspTraceInfo(("Setting led to Solid white as Firmware Download failed \n"));
+                  }
+              }
+        }
+    }
+#endif
         goto EXIT;
     }
     else
