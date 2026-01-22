@@ -57,7 +57,9 @@ extern token_t sysevent_token;
 #define MAX_PROTOCOL  16
 
 extern cap_user appcaps;
-
+#if defined (_COSA_QCA_ARM_)
+extern int g_uid;
+#endif
 
 static int GetFirmwareName (char *pValue, unsigned long maxSize)
 {
@@ -517,7 +519,12 @@ void FwDl_ThreadFunc()
 #endif 
 
     pthread_detach(pthread_self());
+#if defined (_COSA_QCA_ARM_)
+    g_uid = (int) geteuid();
+    CcspTraceInfo(("Gaining root permission to download and write the code to flash uid : %d \n", g_uid));
+#else
     CcspTraceInfo(("Gaining root permission to download and write the code to flash \n"));
+#endif
     gain_root_privilege();
     // Set download led here
 #if defined (FEATURE_RDKB_LED_MANAGER)
@@ -686,10 +693,19 @@ void FwDl_ThreadFunc()
     }
 
 EXIT:
+#if defined (_COSA_QCA_ARM_)
+    CcspTraceInfo(("Dropping root permission... real uid:%d \n", (int) geteuid()));
+    if ((int) geteuid() == 0) {
+	init_capability();
+	drop_root_caps(&appcaps);
+	update_process_caps(&appcaps);
+    }
+#else
     CcspTraceInfo(("Dropping root permission...\n"));
     init_capability();
     drop_root_caps(&appcaps);
     update_process_caps(&appcaps);
+#endif
 #if defined (FEATURE_RDKB_LED_MANAGER_CAPTIVE_PORTAL)
 if (led_disable == true) {
     fclose(fp);
