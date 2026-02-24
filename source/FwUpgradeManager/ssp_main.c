@@ -39,6 +39,7 @@
 #include "ssp_messagebus_interface.h"
 #include "cap.h"
 #include <syscfg/syscfg.h>
+#include "telemetry_busmessage_sender.h"
 #ifdef FEATURE_RDKB_LED_MANAGER
 #include <sysevent/sysevent.h>
 #endif
@@ -293,6 +294,7 @@ int main(int argc, char* argv[])
     signal(SIGHUP, sig_handler);
 #endif
 
+    t2_init("platform-manager");
     cmd_dispatch('e');
 
 #ifdef _COSA_SIM_
