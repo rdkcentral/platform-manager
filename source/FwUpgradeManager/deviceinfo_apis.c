@@ -38,6 +38,7 @@
 #include "ssp_global.h"
 #include "fwupgrade_hal.h"
 #include "cap.h"
+#include "fw_download_check.h"
 #include <syscfg/syscfg.h>
 #ifdef FEATURE_RDKB_LED_MANAGER
 #include <sysevent/sysevent.h>
@@ -301,6 +302,11 @@ ANSC_STATUS FwDlDmlDIDownloadNow(ANSC_HANDLE hContext)
         return ANSC_STATUS_FAILURE;
     }
 
+    if(can_proceed_fw_download() == FW_DWNLD_MEMCHK_NOT_ENOUGH_MEM){
+        CcspTraceError(("FwDlDmlDIDownloadNow : Not enough memory to proceed firmware download\n"));
+        return ANSC_STATUS_FAILURE;
+    }
+
     pthread_t FWDL_Thread;
     res = pthread_create(&FWDL_Thread, NULL, FwDl_ThreadFunc, "FwDl_ThreadFunc");
     if(res != 0)
@@ -386,6 +392,11 @@ ANSC_STATUS FwDlDmlDIDownloadAndFactoryReset(ANSC_HANDLE hContext)
     if( ret == ANSC_STATUS_FAILURE)
     {
         CcspTraceError((" Failed to set Interface, Ignoring request \n"));
+        return ANSC_STATUS_FAILURE;
+    }
+
+    if(can_proceed_fw_download() == FW_DWNLD_MEMCHK_NOT_ENOUGH_MEM){
+        CcspTraceError(("FwDlDmlDIDownloadAndFactoryReset : Not enough memory to proceed firmware download\n"));
         return ANSC_STATUS_FAILURE;
     }
 
