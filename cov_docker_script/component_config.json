@@ -1,0 +1,168 @@
+{
+  "_comment": "Component Build Configuration for Coverity/Native Builds",
+  "_version": "2.0",
+  "_description": "Defines dependencies and build settings for the native component",
+  
+  "dependencies": {
+    "_comment": "External repositories needed by this component",
+    "repos": [
+      {
+        "name": "common-library",
+        "repo": "https://github.com/rdkcentral/common-library.git",
+        "branch": "develop",
+        "header_paths": [
+          { "source": "source/cosa/include", "destination": "$HOME/usr/include/rdkb" },
+    { "source": "source/util_api/http/include", "destination": "$HOME/usr/include/rdkb" }
+        ]
+      },
+      {
+        "name": "Utopia",
+        "repo": "https://github.com/rdkcentral/utopia.git",
+        "branch": "develop",
+        "header_paths": [
+          { "source": "source/include/syscfg", "destination": "$HOME/usr/include/rdkb/syscfg" },
+          { "source": "source/syscfg/lib", "destination": "$HOME/usr/include/rdkb/syscfg/lib" },
+  { "source": "source/include/sysevent", "destination": "$HOME/usr/include/rdkb/sysevent" },
+  { "source": "source/include", "destination": "$HOME/usr/include/rdkb" }
+        ],
+        "build": {
+          "type": "script",
+          "script": "build_tools_workflows/cov_docker_script/common_external_build.sh"
+        }
+      },
+      {
+        "name": "OvsAgent",
+        "repo": "https://github.com/rdkcentral/open-virtual-switch-agent.git",
+        "branch": "main",
+        "header_paths": [
+          { "source": "source/include", "destination": "$HOME/usr/include/rdkb" }
+        ]
+      },
+      {
+        "name": "rdkb-halif-fwupgrade",
+        "repo": "https://github.com/rdkcentral/rdkb-halif-fwupgrade.git",
+        "branch": "main",
+          "header_paths": [
+          { "source": "include", "destination": "$HOME/usr/include/rdkb" }
+        ]
+      },
+            {
+        "name": "miscellaneous-broadband",
+        "repo": "https://github.com/rdkcentral/miscellaneous-broadband.git",
+        "branch": "develop",
+        "header_paths": [
+          { "source": "source/FwDownloadChk", "destination": "$HOME/usr/include/rdkb" }
+        ],
+        "build": {
+          "type": "commands",
+          "commands": [
+            "./autogen.sh",
+            "./configure",
+            "make -C source/FwDownloadChk CPPFLAGS=\"-I$HOME/usr/include/rdkb\" LDFLAGS=\"-L$HOME/usr/local/lib\""
+          ]
+        }
+      },
+      {
+        "name": "rdkb-halif-platform",
+        "repo": "https://github.com/rdkcentral/rdkb-halif-platform.git",
+        "branch": "main",
+        "header_paths": [
+          { "source": "include", "destination": "$HOME/usr/include/rdkb" }
+        ]
+      },
+            {
+        "name": "rdkb-halif-wifi",
+        "repo": "https://github.com/rdkcentral/rdkb-halif-wifi.git",
+        "branch": "develop",
+        "header_paths": [
+          { "source": "include", "destination": "$HOME/usr/include/rdkb" }
+        ]
+      },
+            {
+        "name": "rdk-wifi-hal",
+        "repo": "https://github.com/rdkcentral/rdk-wifi-hal.git",
+        "branch": "develop",
+        "header_paths": [
+          { "source": "source", "destination": "$HOME/usr/include/rdkb" }
+        ]
+      },
+      {
+        "name": "rdkb-halif-moca",
+        "repo": "https://github.com/rdkcentral/rdkb-halif-moca.git",
+        "branch": "main",
+        "header_paths": [
+          { "source": "include", "destination": "$HOME/usr/include/rdkb" }
+        ]
+      },
+            {
+        "name": "rdkb-halif-dhcp",
+        "repo": "https://github.com/rdkcentral/rdkb-halif-dhcp.git",
+        "branch": "main",
+        "header_paths": [
+          { "source": "include", "destination": "$HOME/usr/include/rdkb" }
+        ]
+      },
+      {
+        "name": "rdkb-halif-cm",
+        "repo": "https://github.com/rdkcentral/rdkb-halif-cm.git",
+        "branch": "main",
+        "header_paths": [
+          { "source": "include", "destination": "$HOME/usr/include/rdkb" }
+        ]
+      },
+      {
+        "name": "rdkb-halif-mta",
+        "repo": "https://github.com/rdkcentral/rdkb-halif-mta.git",
+        "branch": "main",
+          "header_paths": [
+          { "source": "include", "destination": "$HOME/usr/include/rdkb" }
+        ]
+        },
+{
+        "name": "rdkb-halif-mso",
+        "repo": "https://github.com/rdkcentral/rdkb-halif-mso.git",
+        "branch": "main",
+          "header_paths": [
+          { "source": "include", "destination": "$HOME/usr/include/rdkb" }
+        ]
+        },
+{
+        "name": "rdkb-halif-vlan",
+        "repo": "https://github.com/rdkcentral/rdkb-halif-vlan.git",
+        "branch": "main",
+          "header_paths": [
+          { "source": "include", "destination": "$HOME/usr/include/rdkb" }
+        ]
+        },
+      {
+        "name": "hardware-abstraction-layer",
+        "repo": "https://github.com/rdkcentral/hardware-abstraction-layer.git",
+        "branch": "develop",
+        "build": {
+          "type": "commands",
+          "commands": [
+            "./autogen.sh",
+            "./configure",
+            "make -C source CPPFLAGS=\"-I$HOME/usr/include/rdkb\" LDFLAGS=\"-L$HOME/usr/local/lib\""
+          ]
+        }
+      }
+    ]
+  },
+  "native_component": {
+    "_comment": "Configuration for the main component being built",
+    "name": "platform-manager",
+    "include_path": "$HOME/usr/include/rdkb/",
+    "lib_output_path": "$HOME/usr/local/lib/",
+    "pre_build_commands": [
+      {
+        "description": "Generate dm_pack_datamodel.c from XML",
+        "command": "python3 $HOME/usr/include/rdkb/dm_pack_code_gen.py config/RdkFwUpgradeManager.xml source/FwUpgradeManager/dm_pack_datamodel.c"
+      }
+    ],
+    "build": {
+      "type": "autotools",
+      "configure_options_file": "cov_docker_script/configure_options.conf"
+    }
+  }  
+}
