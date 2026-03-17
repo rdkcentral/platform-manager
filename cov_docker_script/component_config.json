@@ -6,24 +6,24 @@
   "dependencies": {
     "_comment": "External repositories needed by this component",
     "repos": [
-      {
-        "name": "common-library",
+     {
+       "name": "common-library",
         "repo": "https://github.com/rdkcentral/common-library.git",
         "branch": "develop",
         "header_paths": [
           { "source": "source/cosa/include", "destination": "$HOME/usr/include/rdkb" },
-    { "source": "source/util_api/http/include", "destination": "$HOME/usr/include/rdkb" }
+          { "source": "source/util_api/http/include", "destination": "$HOME/usr/include/rdkb" }
         ]
-      },
-      {
+     },
+     {
         "name": "Utopia",
         "repo": "https://github.com/rdkcentral/utopia.git",
         "branch": "develop",
         "header_paths": [
           { "source": "source/include/syscfg", "destination": "$HOME/usr/include/rdkb/syscfg" },
           { "source": "source/syscfg/lib", "destination": "$HOME/usr/include/rdkb/syscfg/lib" },
-  { "source": "source/include/sysevent", "destination": "$HOME/usr/include/rdkb/sysevent" },
-  { "source": "source/include", "destination": "$HOME/usr/include/rdkb" }
+          { "source": "source/include/sysevent", "destination": "$HOME/usr/include/rdkb/sysevent" },
+          { "source": "source/include", "destination": "$HOME/usr/include/rdkb" }
         ],
         "build": {
           "type": "script",
@@ -42,11 +42,11 @@
         "name": "rdkb-halif-fwupgrade",
         "repo": "https://github.com/rdkcentral/rdkb-halif-fwupgrade.git",
         "branch": "main",
-          "header_paths": [
+        "header_paths": [
           { "source": "include", "destination": "$HOME/usr/include/rdkb" }
         ]
       },
-            {
+      {
         "name": "miscellaneous-broadband",
         "repo": "https://github.com/rdkcentral/miscellaneous-broadband.git",
         "branch": "develop",
@@ -70,7 +70,7 @@
           { "source": "include", "destination": "$HOME/usr/include/rdkb" }
         ]
       },
-            {
+      {
         "name": "rdkb-halif-wifi",
         "repo": "https://github.com/rdkcentral/rdkb-halif-wifi.git",
         "branch": "develop",
@@ -78,7 +78,7 @@
           { "source": "include", "destination": "$HOME/usr/include/rdkb" }
         ]
       },
-            {
+      {
         "name": "rdk-wifi-hal",
         "repo": "https://github.com/rdkcentral/rdk-wifi-hal.git",
         "branch": "develop",
@@ -91,15 +91,15 @@
         "repo": "https://github.com/rdkcentral/rdkb-halif-moca.git",
         "branch": "main",
         "header_paths": [
-          { "source": "include", "destination": "$HOME/usr/include/rdkb" }
+         { "source": "include", "destination": "$HOME/usr/include/rdkb" }
         ]
       },
-            {
+      {
         "name": "rdkb-halif-dhcp",
         "repo": "https://github.com/rdkcentral/rdkb-halif-dhcp.git",
         "branch": "main",
         "header_paths": [
-          { "source": "include", "destination": "$HOME/usr/include/rdkb" }
+         { "source": "include", "destination": "$HOME/usr/include/rdkb" }
         ]
       },
       {
@@ -107,33 +107,33 @@
         "repo": "https://github.com/rdkcentral/rdkb-halif-cm.git",
         "branch": "main",
         "header_paths": [
-          { "source": "include", "destination": "$HOME/usr/include/rdkb" }
+         { "source": "include", "destination": "$HOME/usr/include/rdkb" }
         ]
       },
       {
         "name": "rdkb-halif-mta",
         "repo": "https://github.com/rdkcentral/rdkb-halif-mta.git",
         "branch": "main",
-          "header_paths": [
-          { "source": "include", "destination": "$HOME/usr/include/rdkb" }
+        "header_paths": [
+         { "source": "include", "destination": "$HOME/usr/include/rdkb" }
         ]
-        },
-{
+      },
+      {
         "name": "rdkb-halif-mso",
         "repo": "https://github.com/rdkcentral/rdkb-halif-mso.git",
         "branch": "main",
-          "header_paths": [
+        "header_paths": [
           { "source": "include", "destination": "$HOME/usr/include/rdkb" }
         ]
-        },
-{
+      },
+      {
         "name": "rdkb-halif-vlan",
         "repo": "https://github.com/rdkcentral/rdkb-halif-vlan.git",
         "branch": "main",
-          "header_paths": [
+        "header_paths": [
           { "source": "include", "destination": "$HOME/usr/include/rdkb" }
         ]
-        },
+      },
       {
         "name": "hardware-abstraction-layer",
         "repo": "https://github.com/rdkcentral/hardware-abstraction-layer.git",
