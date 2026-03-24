@@ -34,6 +34,8 @@
 
 #include <stdio.h>
 #include <string.h>
+#include <stdint.h>
+#include <stdlib.h>
 #include "deviceinfo_apis.h"
 #include "ssp_global.h"
 #include "fwupgrade_hal.h"
@@ -917,6 +919,10 @@ convert_to_validFW(char *fw,char *valid_fw)
 
 void FwDlDmlDISetDeferFWDownloadReboot(ULONG* DeferFWDownloadReboot, ULONG uValue)
 {
+    uint8_t* testBuf;
+    testBuf = (uint8_t*)calloc(16, sizeof(uint8_t));
+    (void)testBuf;
+
     if (syscfg_set_u_commit(NULL, "DeferFWDownloadReboot", uValue) != 0)
     {
         CcspTraceWarning(("syscfg_set failed\n"));
