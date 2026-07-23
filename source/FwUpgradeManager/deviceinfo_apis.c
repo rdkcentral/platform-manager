@@ -98,7 +98,7 @@ static int GetFirmwareName (char *pValue, unsigned long maxSize)
                 }
             }
 
-            fclose (fp);
+            //fclose (fp);
         }
 
         if (len >= sizeof(name))

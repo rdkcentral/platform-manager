@@ -112,7 +112,7 @@ static int  cmd_dispatch(int  command)
 
                 if ( g_Subsystem[0] != 0 )
                 {
-                    sprintf(CName, "%s%s", g_Subsystem, RDK_COMPONENT_ID_PLATFORM_MANAGER);
+                    sprintf(CName, "%s", g_Subsystem, RDK_COMPONENT_ID_PLATFORM_MANAGER);
                 }
                 else
                 {
