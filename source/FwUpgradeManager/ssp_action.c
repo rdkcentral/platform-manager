@@ -150,7 +150,7 @@ ssp_engage
     }
     else
     {
-        sprintf(CrName, "%s", CCSP_DBUS_INTERFACE_CR);
+        sprintf(CrName, "%s%s", CCSP_DBUS_INTERFACE_CR);
     }
 
     returnStatus =
